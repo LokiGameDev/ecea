@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECE Association | Events</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex-grow: 1;
+        }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .header-nav {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #222;
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: #fb923c;
+            border: 1px solid #fb923c;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #fb923c;
+            color: #000;
+            box-shadow: 0 0 15px rgba(251, 146, 60, 0.5);
+        }
+        .event-card-new {
+            background-color: #111;
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+        .event-card-new:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(251, 146, 60, 0.3);
+            border-color: #fb923c;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <header class="sticky top-0 z-50 header-nav">
+        <nav class="w-full mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-3">
+            <div class="flex items-center space-x-3">
+                <img src="https://placehold.co/50x50/000000/fb923c?text=L1" alt="Logo 1" class="h-8 w-8 rounded-full border border-orange-400/70">
+                <img src="https://placehold.co/50x50/000000/fb923c?text=L2" alt="Logo 2" class="h-8 w-8 rounded-full border border-orange-400/70">
+                <h1 class="text-base md:text-lg font-orbitron text-gray-100 tracking-wider">ECE Association</h1>
+            </div>
+            <div class="relative hidden md:block">
+                <button id="desktop-menu-button" class="flex items-center space-x-2 text-gray-400 hover:text-orange-400 transition-colors duration-300 focus:outline-none p-2 rounded-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
+                    <span class="text-sm font-medium">Menu</span>
+                </button>
+                <div id="desktop-menu" class="hidden absolute right-0 mt-2 w-48 bg-black border border-gray-800 rounded-md shadow-lg py-1 z-20">
+                    <a href="index.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-orange-400">Home</a>
+                    <a href="events.html" class="block px-4 py-2 text-sm text-orange-400 font-semibold">Events</a>
+                    <a href="pastevents.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-orange-400">Archive</a>
+                    <a href="team.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-orange-400">Team</a>
+                    <a href="contact.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-orange-400">Contact</a>
+                </div>
+            </div>
+            <div class="md:hidden"><button id="mobile-menu-button" class="text-gray-200 focus:outline-none"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h16"></path></svg></button></div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2">
+            <a href="index.html" class="block text-gray-300 hover:text-orange-400">Home</a>
+            <a href="events.html" class="block text-orange-400 font-semibold">Events</a>
+            <a href="pastevents.html" class="block text-gray-300 hover:text-orange-400">Archive</a>
+            <a href="team.html" class="block text-gray-300 hover:text-orange-400">Team</a>
+            <a href="contact.html" class="block text-gray-300 hover:text-orange-400">Contact</a>
+        </div>
+    </header>
+
+    <main class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <section class="text-center">
+            <h2 class="text-4xl md:text-5xl font-bold font-orbitron text-white mb-4">Upcoming Events</h2>
+            <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto mb-12">Join our schedule of workshops, competitions, and seminars.</p>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <div class="event-card-new flex flex-col"><img class="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1587831990711-23d72d7d0d62?q=80&w=2070&auto=format&fit=crop" alt="Raspberry Pi"><div class="p-5 flex flex-col flex-grow"><h3 class="text-lg font-bold text-white mb-2">Workshop on Embedded Systems</h3><p class="text-xs text-orange-300 mb-3">October 5, 2025</p><p class="text-sm text-gray-400 mb-4 flex-grow">A hands-on session covering the basics of Raspberry Pi and building a simple IoT device.</p><div class="mt-auto pt-4 border-t border-gray-800"><div class="flex justify-around text-center" data-countdown="2025-10-05T09:00:00"><div><span class="text-2xl font-orbitron text-orange-400">00</span><p class="text-xs text-gray-500">Days</p></div><div><span class="text-2xl font-orbitron text-orange-400">00</span><p class="text-xs text-gray-500">Hours</p></div><div><span class="text-2xl font-orbitron text-orange-400">00</span><p class="text-xs text-gray-500">Minutes</p></div><div><span class="text-2xl font-orbitron text-orange-400">00</span><p class="text-xs text-gray-500">Seconds</p></div></div></div></div></div>
+            <div class="event-card-new flex flex-col"><img class="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop" alt="6G Technology"><div class="p-5 flex flex-col flex-grow"><h3 class="text-lg font-bold text-white mb-2">Guest Lecture: The Future of 6G</h3><p class="text-xs text-orange-300 mb-3">October 20, 2025</p><p class="text-sm text-gray-400 mb-4 flex-grow">An insightful talk on the advancements and challenges in next-generation wireless communication.</p><div class="mt-auto pt-4 border-t border-gray-800"><div class="flex justify-around text-center" data-countdown="2025-10-20T14:00:00"><div><span class="text-2xl font-orbitron text-orange-400">00</span><p class="text-xs text-gray-500">Days</p></div><div><span class="text-2xl font-orbitron text-orange-400">00</span><p class="text-xs text-gray-500">Hours</p></div><div><span class="text-2xl font-orbitron text-orange-400">00</span><p class="text-xs text-gray-500">Minutes</p></div><div><span class="text-2xl font-orbitron text-orange-400">00</span><p class="text-xs text-gray-500">Seconds</p></div></div></div></div></div>
+            <div class="event-card-new flex flex-col"><img class="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop" alt="Circuit Debugging"><div class="p-5 flex flex-col flex-grow"><h3 class="text-lg font-bold text-white mb-2">Circuit Debugging Challenge</h3><p class="text-xs text-orange-300 mb-3">November 12, 2025</p><p class="text-sm text-gray-400 mb-4 flex-grow">Put your troubleshooting skills to the test in this fast-paced competition.</p><div class="mt-auto pt-4 border-t border-gray-800"><div class="flex justify-around text-center" data-countdown="2025-11-12T10:00:00"><div><span class="text-2xl font-orbitron text-orange-400">00</span><p class="text-xs text-gray-500">Days</p></div><div><span class="text-2xl font-orbitron text-orange-400">00</span><p class="text-xs text-gray-500">Hours</p></div><div><span class="text-2xl font-orbitron text-orange-400">00</span><p class="text-xs text-gray-500">Minutes</p></div><div><span class="text-2xl font-orbitron text-orange-400">00</span><p class="text-xs text-gray-500">Seconds</p></div></div></div></div></div>
+        </section>
+        
+        <section class="text-center mt-20">
+             <h3 class="text-2xl font-bold text-orange-400 mb-4 font-orbitron">Looking Back</h3>
+             <p class="text-base text-gray-400 mb-6">Curious about what we've done? Check our archive.</p>
+             <a href="pastevents.html" class="btn-secondary font-semibold py-2 px-6 rounded-md text-sm inline-block">View Past Events</a>
+        </section>
+    </main>
+
+    <footer class="mt-16 border-t border-gray-900">
+        <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col md:flex-row justify-between items-center"><p class="text-gray-500 text-xs mb-4 md:mb-0">&copy; 2025 ECE Association. All Rights Reserved.</p><div class="flex space-x-5"><a href="#" class="text-gray-500 hover:text-orange-400 transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.316 1.363.364 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.048 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.316-2.427.364-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.048-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.316-1.363-.364-2.427C2.013 14.784 2 14.43 2 12s.013-2.784.06-3.808c.048-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.48 3.636c.636-.247 1.363-.316 2.427-.364C8.93 2.013 9.284 2 12.315 2zM12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm6.406-11.845a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z" clip-rule="evenodd" /></svg></a><a href="#" class="text-gray-500 hover:text-orange-400 transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.908.644 1.96.99 3.026.99H13c1.066 0 2.118-.346 3.026-.99l6.6-4.685c.025-.012.05-.023.076-.032V4.5A1.5 1.5 0 0 0 21.5 3H2.5ZM1 6.868v10.632A1.5 1.5 0 0 0 2.5 19h19a1.5 1.5 0 0 0 1.5-1.5V6.868L14.47 11.99a5 5 0 0 1-5.94 0L1 6.868Z" /></svg></a></div></div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+            const desktopMenuButton = document.getElementById('desktop-menu-button');
+            const desktopMenu = document.getElementById('desktop-menu');
+            if (desktopMenuButton) {
+                desktopMenuButton.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    desktopMenu.classList.toggle('hidden');
+                });
+            }
+            window.addEventListener('click', (event) => {
+                if (desktopMenu && !desktopMenu.classList.contains('hidden')) {
+                    if (!desktopMenu.contains(event.target) && !desktopMenuButton.contains(event.target)) {
+                        desktopMenu.classList.add('hidden');
+                    }
+                }
+            });
+            const countdownElements = document.querySelectorAll('[data-countdown]');
+            const updateCountdown = () => {
+                countdownElements.forEach(el => {
+                    const targetDate = new Date(el.dataset.countdown).getTime();
+                    const now = new Date().getTime();
+                    const distance = targetDate - now;
+                    if (distance < 0) {
+                        el.innerHTML = '<p class="text-lg font-bold text-gray-500">Event has started</p>';
+                        return;
+                    }
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    const spans = el.querySelectorAll('span');
+                    spans[0].textContent = String(days).padStart(2, '0');
+                    spans[1].textContent = String(hours).padStart(2, '0');
+                    spans[2].textContent = String(minutes).padStart(2, '0');
+                    spans[3].textContent = String(seconds).padStart(2, '0');
+                });
+            };
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+        });
+    </script>
+</body>
+</html>
+
