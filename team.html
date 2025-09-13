@@ -9,9 +9,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #000000;
+            background: linear-gradient(-45deg, #000000, #1a0a00, #000000, #130f0d);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
             color: #f8f8f8;
             display: flex;
             flex-direction: column;
@@ -30,13 +37,23 @@
         .team-card {
             background-color: #111;
             border: 1px solid #222;
-            transition: all 0.3s ease;
+            transition: opacity 0.6s ease-out, transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             border-radius: 0.5rem;
         }
-        .team-card:hover {
-            transform: translateY(-5px);
+        /* UPDATED: Increased specificity to override scroll animation transform */
+        .team-card.animate-on-scroll:hover {
+            transform: translateY(-5px) scale(1.05);
             box-shadow: 0 0 20px rgba(251, 146, 60, 0.3);
             border-color: #fb923c;
+        }
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -53,17 +70,17 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
                     <span class="text-sm font-medium">Menu</span>
                 </button>
-                <div id="desktop-menu" class="hidden absolute right-0 mt-2 w-48 bg-black border border-gray-800 rounded-md shadow-lg py-1 z-20">
-                    <a href="index.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-orange-400">Home</a>
-                    <a href="events.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-orange-400">Events</a>
-                    <a href="pastevents.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-orange-400">Archive</a>
+                <div id="desktop-menu" class="hidden absolute right-0 mt-2 w-48 bg-black/80 backdrop-blur-sm border border-gray-800 rounded-md shadow-lg py-1 z-20">
+                    <a href="index.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900/50 hover:text-orange-400">Home</a>
+                    <a href="events.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900/50 hover:text-orange-400">Events</a>
+                    <a href="pastevents.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900/50 hover:text-orange-400">Archive</a>
                     <a href="team.html" class="block px-4 py-2 text-sm text-orange-400 font-semibold">Team</a>
-                    <a href="contact.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-orange-400">Contact</a>
+                    <a href="contact.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900/50 hover:text-orange-400">Contact</a>
                 </div>
             </div>
             <div class="md:hidden"><button id="mobile-menu-button" class="text-gray-200 focus:outline-none"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h16"></path></svg></button></div>
         </nav>
-        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2">
+        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 bg-black/80 backdrop-blur-sm">
             <a href="index.html" class="block text-gray-300 hover:text-orange-400">Home</a>
             <a href="events.html" class="block text-gray-300 hover:text-orange-400">Events</a>
             <a href="pastevents.html" class="block text-gray-300 hover:text-orange-400">Archive</a>
@@ -73,99 +90,99 @@
     </header>
 
     <main class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <section class="text-center">
+        <section class="text-center animate-on-scroll">
             <h2 class="text-4xl md:text-5xl font-bold font-orbitron text-white mb-4">Meet the Team</h2>
             <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto mb-12">The driving force behind our association. A group of dedicated students committed to creating a vibrant tech community.</p>
         </section>
 
         <!-- Group 1: Core Committee -->
-        <div class="text-center mb-10 mt-4">
+        <div class="text-center mb-10 mt-4 animate-on-scroll">
             <h3 class="text-3xl font-bold font-orbitron text-white">Core Committee</h3>
         </div>
         <section class="flex flex-wrap justify-center gap-6 mx-auto max-w-7xl">
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Lokeshwaran.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Lokeshwaran K</h3><p class="text-orange-400 font-semibold text-xs">Secretary/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Elango.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Elango S</h3><p class="text-orange-400 font-semibold text-xs">Chairman/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Sabarivelan.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Sabarivelan S</h3><p class="text-orange-400 font-semibold text-xs">Vice Chairman/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Prethikaa.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Prethikaa D</h3><p class="text-orange-400 font-semibold text-xs">Treasurer/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Subhiksha.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Subiksha S</h3><p class="text-orange-400 font-semibold text-xs">Treasurer/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Yokithsurya.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Yokith Surya M</h3><p class="text-orange-400 font-semibold text-xs">Secretary/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Lokeshwaran.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Lokeshwaran K</h3><p class="text-orange-400 font-semibold text-xs">Secretary/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 50ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Elango.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Elango S</h3><p class="text-orange-400 font-semibold text-xs">Chairman/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 100ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Sabarivelan.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Sabarivelan S</h3><p class="text-orange-400 font-semibold text-xs">Vice Chairman/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 150ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Prethikaa.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Prethikaa D</h3><p class="text-orange-400 font-semibold text-xs">Treasurer/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 200ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Subhiksha.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Subiksha S</h3><p class="text-orange-400 font-semibold text-xs">Treasurer/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 250ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Yokithsurya.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Yokith Surya M</h3><p class="text-orange-400 font-semibold text-xs">Secretary/ISF</p></div>
         </section>
 
         <!-- Group 2: Additional Secretaries -->
-        <div class="text-center my-16">
+        <div class="text-center my-16 animate-on-scroll">
             <h3 class="text-3xl font-bold font-orbitron text-white">Additional Secretaries</h3>
         </div>
         <section class="flex flex-wrap justify-center gap-6 mx-auto max-w-7xl">
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Dharshan.jpeg" alt="Team member photo"><h3 class="text-md font-bold text-white">Dharshan S</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Boobathi.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Boobathi Raja K M</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Kavyashri.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Kavyashri J M</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Sandhya.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Sandhya D</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Yogessh.jpeg" alt="Team member photo"><h3 class="text-md font-bold text-white">Yogesh T N</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Shrisudhan.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Shri Sudhan B</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Kaviprashaad.jpeg" alt="Team member photo"><h3 class="text-md font-bold text-white">Kaviprashaad L</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Mohanapriya.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Mohana Priya K</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Vetriselvan.png" alt="Team member photo"><h3 class="text-md font-bold text-white">Vetri Selvan K</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Dharshan.jpeg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Dharshan S</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 50ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Boobathi.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Boobathi Raja K M</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 100ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Kavyashri.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Kavyashri J M</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 150ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Sandhya.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Sandhya D</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 200ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Yogessh.jpeg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Yogesh T N</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 250ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Shrisudhan.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Shri Sudhan B</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 300ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Kaviprashaad.jpeg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Kaviprashaad L</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 350ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Mohanapriya.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Mohana Priya K</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 400ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="assets/photos/Vetriselvan.png" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Vetri Selvan K</h3><p class="text-orange-400 font-semibold text-xs">Additional Secretary/ISF</p></div>
         </section>
 
         <!-- Group 3: Joint Secretaries -->
-        <div class="text-center my-16">
+        <div class="text-center my-16 animate-on-scroll">
             <h3 class="text-3xl font-bold font-orbitron text-white">Joint Secretaries</h3>
         </div>
         <section class="flex flex-wrap justify-center gap-6 mx-auto max-w-7xl">
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Sandeep.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Sandeep M</h3><p class="text-orange-400 font-semibold text-xs">Joint Secretary/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Shakthi.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Shakthi C</h3><p class="text-orange-400 font-semibold text-xs">Joint Secretary/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Akilan.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Akilan M</h3><p class="text-orange-400 font-semibold text-xs">Joint Secretary/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Selvabrindha.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Selva Brindha K</h3><p class="text-orange-400 font-semibold text-xs">Joint Secretary/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Sandeep.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Sandeep M</h3><p class="text-orange-400 font-semibold text-xs">Joint Secretary/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 50ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Shakthi.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Shakthi C</h3><p class="text-orange-400 font-semibold text-xs">Joint Secretary/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 100ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Akilan.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Akilan M</h3><p class="text-orange-400 font-semibold text-xs">Joint Secretary/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 150ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Selvabrindha.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Selva Brindha K</h3><p class="text-orange-400 font-semibold text-xs">Joint Secretary/ISF</p></div>
         </section>
 
         <!-- Group 4: Executive Members -->
-        <div class="text-center my-16">
+        <div class="text-center my-16 animate-on-scroll">
             <h3 class="text-3xl font-bold font-orbitron text-white">Executive Members</h3>
         </div>
         <section class="flex flex-wrap justify-center gap-6 mx-auto max-w-7xl">
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Karthikeyan.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Karthikeyan G</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Daithiya.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Daithiya Sudhan S J</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Divyabharathi.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Divyabharathi Balan</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Harini.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Harini M</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Logaprasath.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Loga Prasath D</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Zakiyaa.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Zakiyaa Sulthana J</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Akshavikaa.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Akshavikaa P V</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Kishanth Govindaraj.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Kishanth Govindraj</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Hadirasool.jpeg" alt="Team member photo"><h3 class="text-md font-bold text-white">Hadi Rasool</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Lokesh.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Lokesh V</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Prabanjari.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Prabanjari V S</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Sivapraksh.jpeg" alt="Team member photo"><h3 class="text-md font-bold text-white">Sivaprakash P</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Karthikeyan.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Karthikeyan G</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 50ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Daithiya.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Daithiya Sudhan S J</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 100ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Divyabharathi.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Divyabharathi Balan</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 150ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Harini.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Harini M</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 200ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Logaprasath.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Loga Prasath D</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 250ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Zakiyaa.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Zakiyaa Sulthana J</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 300ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Akshavikaa.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Akshavikaa P V</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 350ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Kishanth Govindaraj.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Kishanth Govindraj</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 400ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Hadirasool.jpeg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Hadi Rasool</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 450ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Lokesh.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Lokesh V</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 500ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Prabanjari.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Prabanjari V S</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 550ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Sivapraksh.jpeg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Sivaprakash P</h3><p class="text-orange-400 font-semibold text-xs">Executive Member/ISF</p></div>
         </section>
 
          <!-- Group 5: Office Bearers -->
-        <div class="text-center my-16">
+        <div class="text-center my-16 animate-on-scroll">
             <h3 class="text-3xl font-bold font-orbitron text-white">Office Bearers</h3>
         </div>
         <section class="flex flex-wrap justify-center gap-6 mx-auto max-w-7xl">
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Bhavatharani.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Bhavatharani Y</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Dhivashini.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Dhivashini J</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Jayanivash.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Jayanivash P</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Mugilan.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Mukilan K P</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Sangamithara.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Sangamithara R M</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Narmatha.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Narmatha A</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Subhasree.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Subhasree K</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Ciromiyan.jpeg" alt="Team member photo"><h3 class="text-md font-bold text-white">Ciromiyan S</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Charunethra.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Charunethraa K S</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Iniya.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Iniya L</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Janish.jpeg" alt="Team member photo"><h3 class="text-md font-bold text-white">Janish S</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Mmonishraj.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Monishraj K</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Srenidhi.jpg" alt="Team member photo"><h3 class="text-md font-bold text-white">Srenidhi G P</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
-            <div class="team-card text-center p-5 w-64"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Suganth.jpeg" alt="Team member photo"><h3 class="text-md font-bold text-white">Suganth S</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Bhavatharani.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Bhavatharani Y</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 50ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Dhivashini.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Dhivashini J</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 100ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Jayanivash.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Jayanivash P</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 150ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Mugilan.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Mukilan K P</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 200ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Sangamithara.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Sangamithara R M</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 250ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Narmatha.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Narmatha A</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 300ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Subhasree.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Subhasree K</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ECEA</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 350ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Ciromiyan.jpeg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Ciromiyan S</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 400ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Charunethra.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Charunethraa K S</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 450ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Iniya.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Iniya L</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 500ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Janish.jpeg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Janish S</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 550ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Mmonishraj.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Monishraj K</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 600ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Srenidhi.jpg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Srenidhi G P</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
+            <div class="team-card text-center p-5 w-64 animate-on-scroll" style="transition-delay: 650ms;"><img class="w-36 h-36 rounded-full mx-auto mb-3 border-2 border-gray-700" src="/assets/photos/Suganth.jpeg" alt="Team member photo" oncontextmenu="return false;"><h3 class="text-md font-bold text-white">Suganth S</h3><p class="text-orange-400 font-semibold text-xs">Office Bearer/ISF</p></div>
         </section>
-
     </main>
 
-    <footer class="mt-16 border-t border-gray-900">
+    <footer class="mt-16 border-t border-gray-900/50">
         <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col md:flex-row justify-between items-center"><p class="text-gray-500 text-xs mb-4 md:mb-0">&copy; 2025 ECE Association.</p><div class="flex space-x-5"><a href="#" class="text-gray-500 hover:text-orange-400 transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.316 1.363.364 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.048 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.316-2.427.364-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.048-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.316-1.363-.364-2.427C2.013 14.784 2 14.43 2 12s.013-2.784.06-3.808c.048-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.48 3.636c.636-.247 1.363-.316 2.427-.364C8.93 2.013 9.284 2 12.315 2zM12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm6.406-11.845a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z" clip-rule="evenodd" /></svg></a><a href="#" class="text-gray-500 hover:text-orange-400 transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.908.644 1.96.99 3.026.99H13c1.066 0 2.118-.346 3.026-.99l6.6-4.685c.025-.012.05-.023.076-.032V4.5A1.5 1.5 0 0 0 21.5 3H2.5ZM1 6.868v10.632A1.5 1.5 0 0 0 2.5 19h19a1.5 1.5 0 0 0 1.5-1.5V6.868L14.47 11.99a5 5 0 0 1-5.94 0L1 6.868Z" /></svg></a></div></div>
     </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Menu Scripts
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
@@ -183,6 +200,20 @@
                         desktopMenu.classList.add('hidden');
                     }
                 }
+            });
+            // On-scroll animation logic
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            animatedElements.forEach(el => {
+                observer.observe(el);
             });
         });
     </script>

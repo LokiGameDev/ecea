@@ -31,16 +31,43 @@
             background-color: #111;
             border: 1px solid #222;
             transition: all 0.3s ease;
-            overflow: hidden;
             border-radius: 0.5rem;
+            overflow: hidden;
         }
         .event-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 0 20px rgba(251, 146, 60, 0.3);
             border-color: #fb923c;
         }
-        .event-card img { transition: transform 0.3s ease; }
-        .event-card:hover img { transform: scale(1.05); }
+        /* Styles for the image gallery */
+        .image-gallery {
+            position: relative;
+            width: 100%;
+            height: 12rem; /* 192px */
+        }
+        .image-gallery img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .image-gallery img.active {
+            opacity: 1;
+        }
+        /* Styles for scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -48,8 +75,8 @@
         <nav class="w-full mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-3">
             <div class="flex items-center space-x-3">
                 <h1 class="text-base md:text-lg font-orbitron text-gray-100 tracking-wider">Department of ECE</h1>
-                <img src="/assets/ECEA Logo.jpg" alt="Logo 1" class="h-8 w-8 rounded-full border border-orange-400/70">
-                <img src="/assets/ISF Logo.png" alt="Logo 2" class="h-8 w-8 rounded-full border border-orange-400/70">
+                <img src="/assets/ECEA Logo.jpg" alt="Logo 1" class="h-8 w-8 rounded-full border border-orange-400/70" onerror="this.onerror=null;this.src='https://placehold.co/50x50/000000/fb923c?text=L1';">
+                <img src="/assets/ISF Logo.png" alt="Logo 2" class="h-8 w-8 rounded-full border border-orange-400/70" onerror="this.onerror=null;this.src='https://placehold.co/50x50/000000/fb923c?text=L2';">
             </div>
             <div class="relative hidden md:block">
                 <button id="desktop-menu-button" class="flex items-center space-x-2 text-gray-400 hover:text-orange-400 transition-colors duration-300 focus:outline-none p-2 rounded-md">
@@ -76,18 +103,73 @@
     </header>
 
     <main class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <section class="text-center">
-            <h2 class="text-4xl md:text-5xl font-bold font-orbitron text-white mb-4">Events Archive</h2>
-            <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto mb-12">A look back at the milestones, memories, and moments of learning from our previous events.</p>
+        <section class="text-center animate-on-scroll">
+            <h2 class="text-4xl md:text-5xl font-bold font-orbitron text-white mb-4">Event Archives</h2>
+            <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto mb-12">A look back at our most memorable events.</p>
         </section>
 
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="event-card"><img class="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop" alt="Event photo"><div class="p-5"><p class="text-xs text-orange-300 mb-1">September 15, 2025</p><h3 class="text-lg font-bold text-white mb-2">Hackathon 2025</h3><p class="text-sm text-gray-400">A 24-hour coding marathon where students collaborated to build innovative software and hardware solutions.</p></div></div>
-            <div class="event-card"><img class="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1556761175-b413da4b248a?q=80&w=1974&auto=format&fit=crop" alt="Event photo"><div class="p-5"><p class="text-xs text-orange-300 mb-1">August 22, 2025</p><h3 class="text-lg font-bold text-white mb-2">VLSI Design Workshop</h3><p class="text-sm text-gray-400">An intensive workshop covering the fundamentals of Very Large Scale Integration (VLSI) chip design using modern EDA tools.</p></div></div>
-            <div class="event-card"><img class="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1521737852577-684897f2021d?q=80&w=2070&auto=format&fit=crop" alt="Event photo"><div class="p-5"><p class="text-xs text-orange-300 mb-1">July 10, 2025</p><h3 class="text-lg font-bold text-white mb-2">Alumni Networking Night</h3><p class="text-sm text-gray-400">A fantastic evening connecting current students with successful alumni working in top tech companies.</p></div></div>
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            
+            <div class="event-card animate-on-scroll">
+                <div class="image-gallery">
+                    <img src="https://images.unsplash.com/photo-1631624215248-2c2e08316315?q=80&w=600&auto=format&fit=crop" alt="Event Image 1" class="active">
+                    <img src="https://images.unsplash.com/photo-1614941108593-390484b6f7cf?q=80&w=600&auto=format&fit=crop" alt="Event Image 2">
+                </div>
+                <div class="p-5">
+                    <h3 class="text-lg font-bold text-white mb-2">Ideathon'25</h3>
+                    <p class="text-xs text-gray-400 mb-3">March 4, 2025</p>
+                    <p class="text-sm text-gray-500">A National level technical symposium with technical and non-technical events.</p>
+                </div>
+            </div>
+
+            <div class="event-card animate-on-scroll" style="transition-delay: 100ms;">
+                <div class="image-gallery">
+                    <img src="https://images.unsplash.com/photo-1631624215248-2c2e08316315?q=80&w=600&auto=format&fit=crop" alt="Event Image 1" class="active">
+                    <img src="https://images.unsplash.com/photo-1614941108593-390484b6f7cf?q=80&w=600&auto=format&fit=crop" alt="Event Image 2">
+                </div>
+                <div class="p-5">
+                    <h3 class="text-lg font-bold text-white mb-2">Acumen'25</h3>
+                    <p class="text-xs text-gray-400 mb-3">March 4, 2025</p>
+                    <p class="text-sm text-gray-500">A National level technical symposium with technical and non-technical events.</p>
+                </div>
+            </div>
+
+            <div class="event-card animate-on-scroll" style="transition-delay: 200ms;">
+                <div class="image-gallery">
+                     <img src="https://images.unsplash.com/photo-1618793541981-646a5b3a3250?q=80&w=600&auto=format&fit=crop" alt="Event Image 1" class="active">
+                     <img src="https://images.unsplash.com/photo-1581092921448-42f8e2175e3c?q=80&w=600&auto=format&fit=crop" alt="Event Image 2">
+                </div>
+                <div class="p-5">
+                    <h3 class="text-lg font-bold text-white mb-2">Techthirst-II</h3>
+                    <p class="text-xs text-gray-400 mb-3">March 18, 2025</p>
+                    <p class="text-sm text-gray-500">An Intra department level technical symposium.</p>
+                </div>
+            </div>
+
+            <div class="event-card animate-on-scroll">
+                <div class="image-gallery">
+                    <img src="https://images.unsplash.com/photo-1544226162-354a7a374b94?q=80&w=600&auto=format&fit=crop" alt="Event Image 1" class="active">
+                    <img src="https://images.unsplash.com/photo-1579792862846-957f539aa64b?q=80&w=600&auto=format&fit=crop" alt="Event Image 2">
+                </div>
+                <div class="p-5">
+                    <h3 class="text-lg font-bold text-white mb-2">ECE Hackathon'24</h3>
+                    <p class="text-xs text-gray-400 mb-3">September 20,21 2024</p>
+                    <p class="text-sm text-gray-500">A 30-Hour Intra Department level hackathon in various domains with Cash prizes.</p>
+                </div>
+            </div>
+
+            <div class="event-card animate-on-scroll" style="transition-delay: 100ms;">
+                <div class="image-gallery">
+                     <img src="https://images.unsplash.com/photo-1618793541981-646a5b3a3250?q=80&w=600&auto=format&fit=crop" alt="Event Image 1" class="active">
+                </div>
+                <div class="p-5">
+                    <h3 class="text-lg font-bold text-white mb-2">Techthirst-I</h3>
+                    <p class="text-xs text-gray-400 mb-3">September 27, 2024</p>
+                    <p class="text-sm text-gray-500">An Intra department level technical symposium.</p>
+                </div>
+            </div>
+
         </section>
-        
-        <div class="text-center mt-12"><a href="events.html" class="text-orange-400 hover:text-white font-semibold text-sm transition-colors">&larr; Back to Upcoming Events</a></div>
     </main>
 
     <footer class="mt-16 border-t border-gray-900">
@@ -96,9 +178,11 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Menu Scripts
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+            
             const desktopMenuButton = document.getElementById('desktop-menu-button');
             const desktopMenu = document.getElementById('desktop-menu');
             if (desktopMenuButton) {
@@ -113,6 +197,51 @@
                         desktopMenu.classList.add('hidden');
                     }
                 }
+            });
+
+            // Image Gallery Slideshow Logic
+            const eventCards = document.querySelectorAll('.event-card');
+            eventCards.forEach(card => {
+                const gallery = card.querySelector('.image-gallery');
+                const images = gallery.querySelectorAll('img');
+                let currentIndex = 0;
+                let intervalId = null;
+
+                const startSlideshow = () => {
+                    if (images.length <= 1) return; 
+                    intervalId = setInterval(() => {
+                        images[currentIndex].classList.remove('active');
+                        currentIndex = (currentIndex + 1) % images.length;
+                        images[currentIndex].classList.add('active');
+                    }, 2000); 
+                };
+
+                const stopSlideshow = () => {
+                    clearInterval(intervalId);
+                    intervalId = null;
+                    images[currentIndex].classList.remove('active');
+                    currentIndex = 0;
+                    images[currentIndex].classList.add('active');
+                };
+
+                card.addEventListener('mouseenter', startSlideshow);
+                card.addEventListener('mouseleave', stopSlideshow);
+            });
+
+            // On-scroll animation logic
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            animatedElements.forEach(el => {
+                observer.observe(el);
             });
         });
     </script>
