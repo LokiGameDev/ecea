@@ -9,17 +9,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #000000;
+            background: linear-gradient(-45deg, #000000, #1a0a00, #000000, #130f0d);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
             color: #f8f8f8;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-        main {
-            flex-grow: 1;
-        }
+        main { flex-grow: 1; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .header-nav {
             background-color: rgba(0, 0, 0, 0.7);
@@ -28,10 +33,8 @@
             border-bottom: 1px solid #222;
         }
         .event-card {
-            background-color: #111;
-            border: 1px solid #222;
-            transition: all 0.3s ease;
-            border-radius: 0.5rem;
+            background-color: #111; border: 1px solid #222;
+            transition: all 0.3s ease; border-radius: 0.5rem;
             overflow: hidden;
         }
         .event-card:hover {
@@ -39,26 +42,14 @@
             box-shadow: 0 0 20px rgba(251, 146, 60, 0.3);
             border-color: #fb923c;
         }
-        /* Styles for the image gallery */
-        .image-gallery {
-            position: relative;
-            width: 100%;
-            height: 12rem; /* 192px */
-        }
+        .image-gallery { position: relative; width: 100%; height: 12rem; }
         .image-gallery img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; object-fit: cover;
+            opacity: 0; transition: opacity 0.5s ease-in-out;
         }
-        .image-gallery img.active {
-            opacity: 1;
-        }
-        /* Styles for scroll animations */
+        .image-gallery img.active { opacity: 1; }
+        /* Scroll animations */
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(30px);
@@ -68,32 +59,48 @@
             opacity: 1;
             transform: translateY(0);
         }
+        /* Gallery Styles */
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 0.5rem;
+            border: 1px solid #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #111;
+        }
+        .gallery-item img {
+            transition: transform 0.4s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body class="antialiased">
     <header class="sticky top-0 z-50 header-nav">
         <nav class="w-full mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-3">
-            <div class="flex items-center space-x-3">
+             <div class="flex items-center space-x-3">
                 <h1 class="text-base md:text-lg font-orbitron text-gray-100 tracking-wider">Department of ECE</h1>
                 <img src="/assets/ECEA Logo.jpg" alt="Logo 1" class="h-8 w-8 rounded-full border border-orange-400/70" onerror="this.onerror=null;this.src='https://placehold.co/50x50/000000/fb923c?text=L1';">
                 <img src="/assets/ISF Logo.png" alt="Logo 2" class="h-8 w-8 rounded-full border border-orange-400/70" onerror="this.onerror=null;this.src='https://placehold.co/50x50/000000/fb923c?text=L2';">
             </div>
             <div class="relative hidden md:block">
-                <button id="desktop-menu-button" class="flex items-center space-x-2 text-gray-400 hover:text-orange-400 transition-colors duration-300 focus:outline-none p-2 rounded-md">
+                 <button id="desktop-menu-button" class="flex items-center space-x-2 text-gray-400 hover:text-orange-400 transition-colors duration-300 focus:outline-none p-2 rounded-md">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
                     <span class="text-sm font-medium">Menu</span>
                 </button>
-                <div id="desktop-menu" class="hidden absolute right-0 mt-2 w-48 bg-black border border-gray-800 rounded-md shadow-lg py-1 z-20">
-                    <a href="index.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-orange-400">Home</a>
-                    <a href="events.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-orange-400">Events</a>
+                <div id="desktop-menu" class="hidden absolute right-0 mt-2 w-48 bg-black/80 backdrop-blur-sm border border-gray-800 rounded-md shadow-lg py-1 z-20">
+                    <a href="index.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900/50 hover:text-orange-400">Home</a>
+                    <a href="events.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900/50 hover:text-orange-400">Events</a>
                     <a href="pastevents.html" class="block px-4 py-2 text-sm text-orange-400 font-semibold">Archive</a>
-                    <a href="team.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-orange-400">Team</a>
-                    <a href="contact.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-orange-400">Contact</a>
+                    <a href="team.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900/50 hover:text-orange-400">Team</a>
+                    <a href="contact.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900/50 hover:text-orange-400">Contact</a>
                 </div>
             </div>
             <div class="md:hidden"><button id="mobile-menu-button" class="text-gray-200 focus:outline-none"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h16"></path></svg></button></div>
         </nav>
-        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2">
+        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 bg-black/80 backdrop-blur-sm">
             <a href="index.html" class="block text-gray-300 hover:text-orange-400">Home</a>
             <a href="events.html" class="block text-gray-300 hover:text-orange-400">Events</a>
             <a href="pastevents.html" class="block text-orange-400 font-semibold">Archive</a>
@@ -160,7 +167,7 @@
 
             <div class="event-card animate-on-scroll" style="transition-delay: 100ms;">
                 <div class="image-gallery">
-                     <img src="https://images.unsplash.com/photo-1618793541981-646a5b3a3250?q=80&w=600&auto=format&fit=crop" alt="Event Image 1" class="active">
+                      <img src="https://images.unsplash.com/photo-1618793541981-646a5b3a3250?q=80&w=600&auto=format&fit=crop" alt="Event Image 1" class="active">
                 </div>
                 <div class="p-5">
                     <h3 class="text-lg font-bold text-white mb-2">Techthirst-I</h3>
@@ -168,12 +175,30 @@
                     <p class="text-sm text-gray-500">An Intra department level technical symposium.</p>
                 </div>
             </div>
+        </section>
 
+        <!-- Gallery Section -->
+        <section class="mt-20">
+            <div class="text-center mb-12 animate-on-scroll">
+                <h2 class="text-4xl md:text-5xl font-bold font-orbitron text-white mb-4">Gallery</h2>
+                <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto">Moments from our journey.</p>
+            </div>
+            
+            <div class="flex flex-wrap gap-4 justify-center max-w-7xl mx-auto">
+                <!-- Row height is controlled by h-64 (256px). Images will fill this height and have auto width -->
+                <div class="gallery-item animate-on-scroll h-64"><img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&auto=format&fit=crop" alt="Gallery Image 1" class="h-full w-auto"></div>
+                <div class="gallery-item animate-on-scroll h-64" style="transition-delay: 50ms;"><img src="https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&auto=format&fit=crop" alt="Gallery Image 2" class="h-full w-auto"></div>
+                <div class="gallery-item animate-on-scroll h-64" style="transition-delay: 100ms;"><img src="https://images.unsplash.com/photo-1581092921448-42f8e2175e3c?q=80&auto=format&fit=crop" alt="Gallery Image 3" class="h-full w-auto"></div>
+                <div class="gallery-item animate-on-scroll h-64" style="transition-delay: 150ms;"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&auto=format&fit=crop" alt="Gallery Image 4" class="h-full w-auto"></div>
+                <div class="gallery-item animate-on-scroll h-64" style="transition-delay: 200ms;"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&auto=format&fit=crop" alt="Gallery Image 5" class="h-full w-auto"></div>
+                <div class="gallery-item animate-on-scroll h-64" style="transition-delay: 250ms;"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&auto=format&fit=crop" alt="Gallery Image 6" class="h-full w-auto"></div>
+                <div class="gallery-item animate-on-scroll h-64" style="transition-delay: 300ms;"><img src="https://images.unsplash.com/photo-1587831990711-23d72d7d0d62?q=80&auto=format&fit=crop" alt="Gallery Image 7" class="h-full w-auto"></div>
+            </div>
         </section>
     </main>
 
-    <footer class="mt-16 border-t border-gray-900">
-        <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col md:flex-row justify-between items-center"><p class="text-gray-500 text-xs mb-4 md:mb-0">&copy; 2025 ECE Association.</p><div class="flex space-x-5"><a href="#" class="text-gray-500 hover:text-orange-400 transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.316 1.363.364 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.048 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.316-2.427.364-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.048-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.316-1.363-.364-2.427C2.013 14.784 2 14.43 2 12s.013-2.784.06-3.808c.048-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.48 3.636c.636-.247 1.363-.316 2.427-.364C8.93 2.013 9.284 2 12.315 2zM12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm6.406-11.845a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z" clip-rule="evenodd" /></svg></a><a href="#" class="text-gray-500 hover:text-orange-400 transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.908.644 1.96.99 3.026.99H13c1.066 0 2.118-.346 3.026-.99l6.6-4.685c.025-.012.05-.023.076-.032V4.5A1.5 1.5 0 0 0 21.5 3H2.5ZM1 6.868v10.632A1.5 1.5 0 0 0 2.5 19h19a1.5 1.5 0 0 0 1.5-1.5V6.868L14.47 11.99a5 5 0 0 1-5.94 0L1 6.868Z" /></svg></a></div></div>
+    <footer class="mt-16 border-t border-gray-900/50">
+        <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col md:flex-row justify-between items-center"><p class="text-gray-500 text-xs mb-4 md:mb-0">&copy; 2025 ECE Association and IETE Student Forum.</p><div class="flex space-x-5"><a href="https://www.instagram.com/kec_ece_/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-orange-400 transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.316 1.363.364 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.048 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.316-2.427.364-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.048-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.316-1.363-.364-2.427C2.013 14.784 2 14.43 2 12s.013-2.784.06-3.808c.048-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.48 3.636c.636-.247 1.363-.316 2.427-.364C8.93 2.013 9.284 2 12.315 2zM12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm6.406-11.845a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z" clip-rule="evenodd" /></svg></a><a href="#" class="text-gray-500 hover:text-orange-400 transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.908.644 1.96.99 3.026.99H13c1.066 0 2.118-.346 3.026-.99l6.6-4.685c.025-.012.05-.023.076-.032V4.5A1.5 1.5 0 0 0 21.5 3H2.5ZM1 6.868v10.632A1.5 1.5 0 0 0 2.5 19h19a1.5 1.5 0 0 0 1.5-1.5V6.868L14.47 11.99a5 5 0 0 1-5.94 0L1 6.868Z" /></svg></a></div></div>
     </footer>
 
     <script>
@@ -203,6 +228,7 @@
             const eventCards = document.querySelectorAll('.event-card');
             eventCards.forEach(card => {
                 const gallery = card.querySelector('.image-gallery');
+                if (!gallery) return;
                 const images = gallery.querySelectorAll('img');
                 let currentIndex = 0;
                 let intervalId = null;
