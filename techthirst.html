@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECE Association | Symposium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        html {
+            background: linear-gradient(-45deg, #000000, #1a0a00, #000000, #130f0d);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: transparent;
+            color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main { flex-grow: 1; }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .header-nav {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #222;
+        }
+        .event-card {
+            background-color: rgba(0,0,0,0.2);
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+            border-radius: 0.5rem;
+        }
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(251, 146, 60, 0.3);
+            border-color: #fb923c;
+        }
+        .btn-register {
+            background-color: #fb923c; color: #000;
+            transition: all 0.3s ease;
+        }
+        .btn-register:hover {
+             background-color: #f97316;
+             box-shadow: 0 0 15px rgba(251, 146, 60, 0.5);
+        }
+        /* Loader */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000; display: flex; justify-content: center;
+            align-items: center; z-index: 9999; transition: opacity 0.5s ease-out;
+        }
+        #loader img { 
+            width: auto;
+            max-width: 90%;
+            max-height: 80vh;
+            animation: brighten 2.5s ease-in-out forwards; 
+        }
+        @keyframes brighten {
+            0% { opacity: 0; transform: scale(0.95); }
+            70% { opacity: 1; transform: scale(1.02); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div id="loader">
+        <img src="/assets/Techthirst I.jpg" alt="Symposium Poster" onerror="this.onerror=null;this.src='https://placehold.co/800x450/000000/fb923c?text=Symposium+Poster';">
+    </div>
+
+    <div id="main-content" class="opacity-0 transition-opacity duration-500">
+        <header class="sticky top-0 z-50 header-nav">
+            <nav class="w-full mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-3">
+                 <div class="flex items-center space-x-3">
+                    <h1 class="text-base md:text-lg font-orbitron text-gray-100 tracking-wider">Department of ECE</h1>
+                    <img src="/assets/ECEA Logo.jpg" alt="Logo 1" class="h-8 w-8 rounded-full border border-orange-400/70" onerror="this.onerror=null;this.src='https://placehold.co/50x50/000000/fb923c?text=L1';">
+                    <img src="/assets/ISF Logo.png" alt="Logo 2" class="h-8 w-8 rounded-full border border-orange-400/70" onerror="this.onerror=null;this.src='https://placehold.co/50x50/000000/fb923c?text=L2';">
+                </div>
+                <div class="relative hidden md:block">
+                     <button id="desktop-menu-button" class="flex items-center space-x-2 text-gray-400 hover:text-orange-400 transition-colors duration-300 focus:outline-none p-2 rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
+                        <span class="text-sm font-medium">Menu</span>
+                    </button>
+                    <div id="desktop-menu" class="hidden absolute right-0 mt-2 w-48 bg-black/80 backdrop-blur-sm border border-gray-800 rounded-md shadow-lg py-1 z-20">
+                        <a href="index.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900/50 hover:text-orange-400">Home</a>
+                        <a href="events.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900/50 hover:text-orange-400">Events</a>
+                        <a href="pastevents.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900/50 hover:text-orange-400">Archive</a>
+                        <a href="team.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900/50 hover:text-orange-400">Team</a>
+                        <a href="contact.html" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-900/50 hover:text-orange-400">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden"><button id="mobile-menu-button" class="text-gray-200 focus:outline-none"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h16"></path></svg></button></div>
+            </nav>
+            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 bg-black/80 backdrop-blur-sm">
+                <a href="index.html" class="block text-gray-300 hover:text-orange-400">Home</a>
+                <a href="events.html" class="block text-gray-300 hover:text-orange-400">Events</a>
+                <a href="pastevents.html" class="block text-gray-300 hover:text-orange-400">Archive</a>
+                <a href="team.html" class="block text-gray-300 hover:text-orange-400">Team</a>
+                <a href="contact.html" class="block text-gray-300 hover:text-orange-400">Contact</a>
+            </div>
+        </header>
+
+        <main class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <section class="text-center animate-on-scroll">
+                <img src="/assets/Techthirst I.jpg" alt="Techthirst-I" class="max-w-full md:max-w-2xl mx-auto mb-6 rounded-lg shadow-lg shadow-orange-900/20" onerror="this.onerror=null;this.src='https://placehold.co/800x450/000000/fb923c?text=Symposium+Poster';">
+                <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto mb-12">
+                    An Intra Department Technical Symposium
+                </p>
+            </section>
+
+            <!-- Technical Events -->
+            <section class="mb-16">
+                <div class="text-center mb-10 animate-on-scroll">
+                    <h2 class="text-3xl font-bold font-orbitron text-orange-400">Technical Events</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="event-card p-6 animate-on-scroll">
+                        <h3 class="text-xl font-bold text-white mb-2">Paper Presentation</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Showcase your research and innovative ideas to a panel of experts. This is an opportunity to present your findings on cutting-edge topics in electronics and communication, receive valuable feedback, and compete with peers from across the nation.</p>
+                        <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfWdfkiaJ6vdQyFIUA8F8X6C0SySuQeoOwXmSppvI7kwocixw/viewform?usp=sharing&ouid=101274164000752189488', '_blank')" class="mt-auto w-full py-2 rounded-md font-semibold btn-register">Register</button>
+                    </div>
+                    <div class="event-card p-6 animate-on-scroll" style="transition-delay: 100ms;">
+                        <h3 class="text-xl font-bold text-white mb-2">Project Presentation</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Exhibit your most innovative projects and working models. This platform allows you to demonstrate your technical creativity and engineering skills. Present your work to a diverse audience and get recognized for your talent and hard work in building real-world solutions.</p>
+                        <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfWBzlpgG-cAIQxS7ciT63ZXegnk5H5WBqUXtXGJ9O1Rymovg/viewform?usp=sharing&ouid=101274164000752189488', '_blank')" class="mt-auto w-full py-2 rounded-md font-semibold btn-register">Register</button>
+                    </div>
+                     <div class="event-card p-6 animate-on-scroll" style="transition-delay: 200ms;">
+                        <h3 class="text-xl font-bold text-white mb-2">Coding Contest</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Flex your coding muscles in a competitive programming challenge. Solve a series of algorithmic problems designed to test your problem-solving abilities and coding efficiency. Compete against the clock and other participants to claim the top spot.</p>
+                        <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScfTEIq3J26aQePX20Y33r9nH_GgwnchTeK2okd0Gb3_LWOWg/viewform?usp=sharing&ouid=101274164000752189488', '_blank')" class="mt-auto w-full py-2 rounded-md font-semibold btn-register">Register</button>
+                    </div>
+                    <div class="event-card p-6 animate-on-scroll" style="transition-delay: 300ms;">
+                        <h3 class="text-xl font-bold text-white mb-2">Technical Quiz</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Test your knowledge across a wide spectrum of electronics and communication topics. This fast-paced quiz will cover everything from fundamental concepts to the latest technological advancements. Team up and compete to prove you are the ultimate tech genius.</p>
+                        <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScfTEIq3J26aQePX20Y33r9nH_GgwnchTeK2okd0Gb3_LWOWg/viewform?usp=sharing&ouid=101274164000752189488', '_blank')" class="mt-auto w-full py-2 rounded-md font-semibold btn-register">Register</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Non-Technical Events -->
+            <section>
+                <div class="text-center mb-10 animate-on-scroll">
+                     <h2 class="text-3xl font-bold font-orbitron text-orange-400">Non-Technical Events</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="event-card p-6 animate-on-scroll">
+                        <h3 class="text-xl font-bold text-white mb-2">Treasure Hunt</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Embark on an exciting adventure across the campus, solving cryptic clues and completing fun challenges. This event tests your wit, teamwork, and problem-solving skills in a thrilling race against time. Gather your team and get ready to explore!</p>
+                        <button onclick="window.open('#', '_blank')" class="mt-auto w-full py-2 rounded-md font-semibold btn-register">Register</button>
+                    </div>
+                    <div class="event-card p-6 animate-on-scroll" style="transition-delay: 100ms;">
+                        <h3 class="text-xl font-bold text-white mb-2">Connections</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">A fun and engaging event where you find the link between a series of seemingly unrelated images or words. Test your lateral thinking and pop culture knowledge. It’s a battle of wits to see who can make the cleverest connections the fastest!</p>
+                        <button onclick="window.open('#', '_blank')" class="mt-auto w-full py-2 rounded-md font-semibold btn-register">Register</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="mt-auto border-t border-gray-900/50">
+            <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col md:flex-row justify-between items-center"><p class="text-gray-500 text-xs mb-4 md:mb-0">&copy; 2025 ECE Association.</p><div class="flex space-x-5"><a href="https://www.instagram.com/kec_ece_/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-orange-400 transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.316 1.363.364 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.048 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.316-2.427.364-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.048-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.316-1.363-.364-2.427C2.013 14.784 2 14.43 2 12s.013-2.784.06-3.808c.048-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.48 3.636c.636-.247 1.363-.316 2.427-.364C8.93 2.013 9.284 2 12.315 2zM12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm6.406-11.845a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z" clip-rule="evenodd" /></svg></a><a href="#" class="text-gray-500 hover:text-orange-400 transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.908.644 1.96.99 3.026.99H13c1.066 0 2.118-.346 3.026-.99l6.6-4.685c.025-.012.05-.023.076-.032V4.5A1.5 1.5 0 0 0 21.5 3H2.5ZM1 6.868v10.632A1.5 1.5 0 0 0 2.5 19h19a1.5 1.5 0 0 0 1.5-1.5V6.868L14.47 11.99a5 5 0 0 1-5.94 0L1 6.868Z" /></svg></a></div></div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Loader
+            const loader = document.getElementById('loader');
+            const mainContent = document.getElementById('main-content');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                mainContent.style.opacity = '1';
+                setTimeout(() => { loader.style.display = 'none'; },1000);
+            }, 2500); // Increased duration for poster visibility
+
+            // Menu Scripts
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+            const desktopMenuButton = document.getElementById('desktop-menu-button');
+            const desktopMenu = document.getElementById('desktop-menu');
+            if (desktopMenuButton) {
+                desktopMenuButton.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    desktopMenu.classList.toggle('hidden');
+                });
+            }
+            window.addEventListener('click', (event) => {
+                if (desktopMenu && !desktopMenu.classList.contains('hidden')) {
+                    if (!desktopMenu.contains(event.target) && !desktopMenuButton.contains(event.target)) {
+                        desktopMenu.classList.add('hidden');
+                    }
+                }
+            });
+
+            // On-scroll animation logic
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
+
