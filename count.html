@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Response Counts</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .dashboard-container {
+            text-align: center;
+            padding: 30px 40px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+        
+        #counts-container {
+            text-align: left;
+        }
+        
+        .count-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 10px;
+            font-size: 1.2em;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .count-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            color: #34495e;
+        }
+
+        .item-count {
+            font-weight: 700;
+            font-size: 1.3em;
+            color: #2980b9;
+            background-color: #ecf0f1;
+            padding: 5px 12px;
+            border-radius: 20px;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .footer {
+            margin-top: 25px;
+            font-size: 0.9em;
+            color: #95a5a6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <h1>Techthirst Registrations</h1>
+        <div id="counts-container">
+            <p>Loading counts...</p>
+        </div>
+        <div class="footer">
+            Last updated: <span id="last-updated">Never</span>
+        </div>
+    </div>
+
+    <script>
+        // The unique key for your Google Sheet
+        const sheetId = '2PACX-1vTTY_8t9z3lesn5_WMtcZfCjp7YZ-l1VA8agqduJOaWvMaoW2jKvm3jQ2HFKLUnBnt6BV3uQqrMt9Qk';
+
+        // --- ACTION REQUIRED ---
+        // Add the sheets you want to track here.
+        // Find the 'gid' for each sheet and paste it. See instructions below.
+        const sheetsToTrack = [
+            { name: 'Paper Presentation', gid: '163988409' },
+            { name: 'Project Presentation', gid: '637290443' },
+            { name: 'Coding Contest', gid: '844163593' },
+            { name: 'Technical quiz', gid: '1239485479' }
+            // You can add or remove sheets here
+        ];
+
+        const countsContainer = document.getElementById('counts-container');
+        const lastUpdatedElement = document.getElementById('last-updated');
+
+        // This function fetches and processes the data
+        async function fetchAllCounts() {
+            // Use a CORS proxy to prevent browser errors
+            const proxyUrl = 'https://api.allorigins.win/raw?url=';
+            
+            try {
+                // Create a fetch request for each sheet
+                const fetchPromises = sheetsToTrack.map(sheet => {
+                    if (sheet.gid === 'PASTE_GID_HERE') {
+                        // Skip sheets that haven't been configured
+                        return Promise.resolve({ name: sheet.name, count: 'Setup' });
+                    }
+                    const sheetUrl = `https://docs.google.com/spreadsheets/d/e/${sheetId}/pub?gid=${sheet.gid}&single=true&output=csv`;
+                    const finalUrl = proxyUrl + encodeURIComponent(sheetUrl);
+                    
+                    return fetch(finalUrl)
+                        .then(response => {
+                            if (!response.ok) throw new Error(`Network error for ${sheet.name}`);
+                            return response.text();
+                        })
+                        .then(csvText => {
+                            const rows = csvText.split('\n').filter(row => row.trim() !== '');
+                            // Filter rows to only include rows with non-empty first column (assuming name/email is in first column)
+                            const count = rows.filter((row, index) => {
+                                if (index === 0) return false; // skip header
+                                return row.split(',')[0].trim() !== ''; // first column not empty
+                            }).length;
+
+                            return { name: sheet.name, count: count };
+                        });
+                });
+
+                // Wait for all requests to complete
+                const results = await Promise.all(fetchPromises);
+                displayCounts(results);
+
+            } catch (error) {
+                console.error('Error fetching sheet data:', error);
+                countsContainer.innerHTML = '<p style="color: red; text-align: center;">Error loading data. Check GIDs and console.</p>';
+            }
+        }
+        
+        // This function updates the HTML with the new counts
+        function displayCounts(counts) {
+            let htmlContent = '';
+            if (counts.length === 0) {
+                countsContainer.innerHTML = '<p>No sheets configured to track.</p>';
+                return;
+            }
+            counts.forEach(item => {
+                htmlContent += `<div class="count-item">
+                                    <span class="item-name">${item.name}</span>
+                                    <span class="item-count">${item.count}</span>
+                                </div>`;
+            });
+            countsContainer.innerHTML = htmlContent;
+            lastUpdatedElement.textContent = new Date().toLocaleTimeString();
+        }
+
+        // Fetch counts on page load, and then every 30 seconds
+        fetchAllCounts();
+        setInterval(fetchAllCounts, 3000);
+    </script>
+
+</body>
+</html>
