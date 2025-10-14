@@ -17,6 +17,7 @@
         }
         html {
             background: linear-gradient(-45deg, #000000, #1a0a00, #000000, #130f0d);
+            /* background: linear-gradient(-45deg, #ffffff, #ffffff, #ffffff, #ffffff); */
             background-size: 400% 400%;
             animation: gradient-animation 15s ease infinite;
         }
@@ -24,6 +25,7 @@
             font-family: 'Inter', sans-serif;
             background-color: transparent;
             color: #f8f8f8;
+            /* color: rgb(0, 0, 0); */
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -74,7 +76,7 @@
         .video-container {
             position: relative;
             width: 100%;
-            height: 50vh;
+            height: 60vh;
             overflow: hidden;
         }
         #header-video {
@@ -261,7 +263,7 @@
             <div class="video-container">
                 <canvas id="grid-animation-bg" class="absolute top-0 left-0 w-full h-full z-10"></canvas>
                 <video autoplay loop muted playsinline id="header-video">
-                    <source src="assets/This is Minecraft.mp4" type="video/mp4">
+                    <source src="assets/ECE Video.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <div class="video-overlay">
@@ -295,32 +297,23 @@
                         <h3 class="text-center text-3xl font-bold font-orbitron text-white mb-8">Upcoming Events</h3>
                         <div class="card-wrapper">
                             <div class="card-container">
-                                <input type="radio" name="slide" id="c1" checked>
-                                <label for="c1" class="card featured" style="background-image: url('/assets/Events/Techthirst I.jpg');">
+                                <input type="radio" name="slide" id="c2" checked>
+                                <label for="c2" class="card" style="background-image: url('/assets/Events/ECE Hackathon\'26.jpg');">
                                     <div class="ongoing-badge">
                                         <span>🔥</span>
-                                        <span>Ongoing</span>
+                                        <span>Upcoming</span>
                                     </div>
-                                    <div class="card-content">
-                                        <h4 class="text-lg text-white font-semibold leading-tight">Techthirst</h4>
-                                        <p class="text-sm text-orange-300 mt-1">Sep 29, 9:00 AM</p>
-                                        <button class="w-full py-2 mt-4 rounded-md font-semibold btn-register registration-button">Register</button>
-                                        <a href="count.html" class=" action-button text-white font-semibold rounded-lg">Count</a>
-                                    </div>
-                                </label>
-                                <input type="radio" name="slide" id="c2">
-                                <label for="c2" class="card" style="background-image: url('/assets/Events/Acumen\'26.jpg');">
-                                    <div class="card-content">
-                                        <h4 class="text-lg text-white font-semibold leading-tight">Acumen'26</h4>
-                                        <p class="text-sm text-orange-300 mt-1">Jan 20, 2:00 PM</p>
+                                    <div class="card-content">                                        
+                                        <h4 class="text-lg text-white font-semibold leading-tight">ECE Hackathon</h4>
+                                        <p class="text-sm text-orange-300 mt-1">Feb 10, 10:00 AM</p>
                                         <button class="w-full py-2 mt-4 rounded-md font-semibold btn-loading registration-button">Loading...</button>
                                     </div>
                                 </label>
                                 <input type="radio" name="slide" id="c3">
-                                <label for="c3" class="card" style="background-image: url('/assets/Events/ECE Hackathon\'26.jpg');">
+                                <label for="c3" class="card" style="background-image: url('/assets/Events/Acumen\'26.jpg');">
                                     <div class="card-content">
-                                        <h4 class="text-lg text-white font-semibold leading-tight">ECE Hackathon</h4>
-                                        <p class="text-sm text-orange-300 mt-1">Feb 10, 10:00 AM</p>
+                                        <h4 class="text-lg text-white font-semibold leading-tight">Acumen'26</h4>
+                                        <p class="text-sm text-orange-300 mt-1">Jan 20, 2:00 PM</p>
                                         <button class="w-full py-2 mt-4 rounded-md font-semibold btn-loading registration-button">Loading...</button>
                                     </div>
                                 </label>
