@@ -316,19 +316,19 @@
                                         <button class="w-full py-2 mt-4 rounded-md font-semibold btn-register registration-button">Register</button>
                                     </div>
                                 </label>
+                                <input type="radio" name="slide" id="c3">
+                                <label for="c3" class="card" style="background-image: url('/assets/Acumen262.png');">
+                                    <div class="card-content">
+                                        <h4 class="text-lg text-white font-semibold leading-tight">Acumen'26</h4>
+                                        <p class="text-sm text-orange-300 mt-1">Feb 7, 9:00 AM</p>
+                                        <button class="w-full py-2 mt-4 rounded-md font-semibold btn-register registration-button">Register</button>
+                                    </div>
+                                </label>
                                 <input type="radio" name="slide" id="c2">
                                 <label for="c2" class="card" style="background-image: url('/assets/Events/ECE Hackathon\'26.jpg');">
                                     <div class="card-content">                                        
                                         <h4 class="text-lg text-white font-semibold leading-tight">ECE Hackathon</h4>
                                         <p class="text-sm text-orange-300 mt-1">Feb 10, 10:00 AM</p>
-                                        <button class="w-full py-2 mt-4 rounded-md font-semibold btn-loading registration-button">Loading...</button>
-                                    </div>
-                                </label>
-                                <input type="radio" name="slide" id="c3">
-                                <label for="c3" class="card" style="background-image: url('/assets/Events/Acumen\'26.jpg');">
-                                    <div class="card-content">
-                                        <h4 class="text-lg text-white font-semibold leading-tight">Acumen'26</h4>
-                                        <p class="text-sm text-orange-300 mt-1">Jan 20, 2:00 PM</p>
                                         <button class="w-full py-2 mt-4 rounded-md font-semibold btn-loading registration-button">Loading...</button>
                                     </div>
                                 </label>
@@ -439,8 +439,8 @@
                             notificationPopup.classList.remove('show');
                         }, 3000); // Hide after 3 seconds
                     } else if (buttonText === "Register") {
-                        // Replace '#' with your actual registration link
-                        window.open('https://forms.gle/apQfRrPdwSe1skFB9', '_blank');
+                        // Load the registration page
+                        window.location.href = "acumen.html";
                     }
                 });
             });
