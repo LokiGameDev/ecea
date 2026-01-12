@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acumen'26</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --fire: #ff4d00;
+            --lava: #910D0D;
+            --ash: #1a1a1a;
+            --ember: #ffbe0b;
+        }
+        
+        body {
+            background-color: #080808;
+            color: #f0f0f0;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-avatar { font-family: 'Cinzel', serif; }
+
+        /* Animated Fire Background */
+        .bg-fire-depth {
+            background: radial-gradient(circle at bottom, #2b0b00 0%, #080808 80%);
+        }
+
+        /* Glowing Text Animation */
+        @keyframes flicker {
+            0%, 100% { text-shadow: 0 0 10px var(--fire), 0 0 20px var(--fire); }
+            50% { text-shadow: 0 0 5px var(--lava), 0 0 10px var(--lava); }
+        }
+        .fire-text { animation: flicker 2s infinite alternate; color: var(--fire); }
+
+        /* Card Stylings */
+        .glass-card {
+            background: rgba(18, 18, 18, 0.7);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 77, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .glass-card:hover {
+            border-color: var(--fire);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(255, 77, 0, 0.2);
+        }
+
+        .btn-ember {
+            background: linear-gradient(45deg, #ff4d00, #ffb700);
+            box-shadow: 0 4px 15px rgba(255, 77, 0, 0.4);
+            color: black;
+            font-weight: 800;
+            transition: 0.3s;
+        }
+
+        /* Modal / Expanded View */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #111;
+            border: 2px solid var(--fire);
+            max-width: 600px;
+            width: 100%;
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            transform: scale(0.9);
+            transition: 0.3s;
+        }
+
+        .modal-active { display: flex; }
+        .modal-active .modal-content { transform: scale(1); }
+
+        #ash-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--fire), transparent);
+        }
+    </style>
+</head>
+<body class="bg-fire-depth">
+
+    <canvas id="ash-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black/50 backdrop-blur-md border-b border-orange-900/30">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="text-orange-500 font-avatar text-xl font-bold tracking-tighter">ECEA & ISF</span>
+            </div>
+            <div class="hidden md:block text-[10px] text-gray-400 uppercase tracking-[0.3em]">
+                Kongu Engineering College • Dept of ECE
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex flex-col items-center justify-center pt-20 px-4 text-center">
+        <div data-aos="zoom-out" data-aos-duration="1500" class="relative">
+            <img src="Acumen262.png" alt="Acumen'26" class="w-full max-w-[320px] md:max-w-[650px] drop-shadow-[0_0_50px_rgba(255,77,0,0.4)]" onerror="this.src='https://via.placeholder.com/600x200/111/ff4d00?text=ACUMEN+26'">
+        </div>
+
+        <div class="mt-8 space-y-4" data-aos="fade-up" data-aos-delay="500">
+            <p class="text-orange-400 font-avatar tracking-[0.5em] text-sm md:text-lg">FEBRUARY 7 • 2026</p>
+            
+            <div class="flex flex-col items-center gap-2 pt-6">
+                <p class="text-gray-300 font-light max-w-xl mx-auto text-sm md:text-base px-6">
+                    A National Level Technical Symposium held by <br>
+                    <span class="text-white font-bold italic">ECEA</span> and <span class="text-white font-bold italic">ISF</span>
+                </p>
+                <p class="text-orange-600 font-bold tracking-[0.2em] text-sm uppercase">Dept of ECE • Kongu Engineering College</p>
+            </div>
+
+            <div class="mt-8 bg-orange-900/20 border border-orange-500/30 px-8 py-4 rounded-full inline-block backdrop-blur-sm">
+                <span class="text-xl md:text-2xl font-bold">Entry: ₹250 <span class="text-sm font-normal text-gray-400 italic">per head</span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Grid -->
+    <section id="events" class="relative z-10 py-24 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-avatar text-white mb-4" data-aos="fade-up">Technical Arenas</h2>
+            <div class="section-divider w-48 mx-auto"></div>
+            <p class="text-gray-500 mt-4 text-sm uppercase tracking-widest">Click a card for details & instructions</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Event Card Macro -->
+            <div class="glass-card p-8 rounded-3xl" data-aos="fade-up" onclick="openModal('Project Presentation', 'Showcase your innovation to a panel of experts. 1. Team size: Max 3. 2. Duration: 8 mins + 2 mins Q&A. 3. Bring your own laptop/materials.', 'Co-1: Rahul (9876543210), Co-2: Priya (9876543211)', 'FORM_LINK_1')">
+                <div class="mb-4 text-orange-500">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">Project Presentation</h3>
+                <p class="text-orange-500 text-xs font-bold uppercase tracking-widest">View Details &rarr;</p>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="100" onclick="openModal('Codathon', 'Battle of logic and syntax. 1. Language: C, C++, Java, Python. 2. Round 1: Debugging. 3. Round 2: Competitive Coding.', 'Co-1: Arjun (9876543212), Co-2: Sneha (9876543213)', 'FORM_LINK_2')">
+                <div class="mb-4 text-orange-500">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">Codathon</h3>
+                <p class="text-orange-500 text-xs font-bold uppercase tracking-widest">View Details &rarr;</p>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="200" onclick="openModal('Circuitrix', 'Master the flow of electrons. 1. Circuit debugging. 2. Hardware implementation. 3. Simulation rounds.', 'Co-1: Karthik (9876543214), Co-2: Meera (9876543215)', 'FORM_LINK_3')">
+                <div class="mb-4 text-orange-500">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">Circuitrix</h3>
+                <p class="text-orange-500 text-xs font-bold uppercase tracking-widest">View Details &rarr;</p>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl" data-aos="fade-up" onclick="openModal('Ideathon', 'Pitch your revolutionary tech solutions. 1. 5-slide pitch deck. 2. Focus on social impact. 3. Interactive session.', 'Co-1: Vijay (9876543216), Co-2: Ananya (9876543217)', 'FORM_LINK_4')">
+                <div class="mb-4 text-orange-500">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">Ideathon</h3>
+                <p class="text-orange-500 text-xs font-bold uppercase tracking-widest">View Details &rarr;</p>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="100" onclick="openModal('Hackathon', 'Build, break, and recreate. 6 hours of coding mayhem. 1. Theme-based. 2. MVP required. 3. Rapid prototyping.', 'Co-1: Sid (9876543218), Co-2: Pooja (9876543219)', 'FORM_LINK_5')">
+                <div class="mb-4 text-orange-500">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">Hackathon</h3>
+                <p class="text-orange-500 text-xs font-bold uppercase tracking-widest">View Details &rarr;</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Workshops Section -->
+    <section class="py-24 bg-black/40">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl font-avatar text-center text-orange-500 mb-16" data-aos="fade-up">Workshop Ash-Guilds</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="glass-card p-8 rounded-2xl border-l-4 border-orange-600" data-aos="zoom-in" onclick="openModal('Workshop I', 'Advanced Embedded Systems and IoT workshop by industry experts.', 'Tony Stark & Steve Rogers', 'W_LINK_1')">
+                    <h4 class="text-xl font-bold mb-2">Workshop I</h4>
+                    <p class="text-orange-500 text-xs uppercase tracking-widest">Details &rarr;</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl border-l-4 border-orange-600" data-aos="zoom-in" data-aos-delay="100" onclick="openModal('Workshop II', 'Full-stack development workshop with focus on React and Node.', 'Wanda M. & Vision', 'W_LINK_2')">
+                    <h4 class="text-xl font-bold mb-2">Workshop II</h4>
+                    <p class="text-orange-500 text-xs uppercase tracking-widest">Details &rarr;</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl border-l-4 border-orange-600" data-aos="zoom-in" data-aos-delay="200" onclick="openModal('Workshop III', 'Quantum Computing Fundamentals and future tech.', 'Dr. Strange & Bruce Banner', 'W_LINK_3')">
+                    <h4 class="text-xl font-bold mb-2">Workshop III</h4>
+                    <p class="text-orange-500 text-xs uppercase tracking-widest">Details &rarr;</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-6 border-t border-orange-900/50">
+        <div class="max-w-5xl mx-auto text-center">
+            <h3 class="text-2xl font-avatar text-orange-500 mb-12" data-aos="fade-up">Overall Symposium Overlords</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16" data-aos="fade-up">
+                <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+                    <p class="text-xl font-bold">Coordinator 1</p>
+                    <p class="text-orange-400 font-mono">+91 90000 00000</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+                    <p class="text-xl font-bold">Coordinator 2</p>
+                    <p class="text-orange-400 font-mono">+91 90000 00001</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 opacity-50">
+                <p class="tracking-[0.5em] text-xs uppercase">Acumen'26 | Dept of ECE</p>
+                <p class="text-[10px] italic">Kongu Engineering College, Perundurai, Erode</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Expansion Modal -->
+    <div id="eventModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button onclick="document.getElementById('eventModal').classList.remove('modal-active')" class="absolute top-6 right-6 text-orange-500 hover:text-white">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 id="modalTitle" class="text-4xl font-avatar text-orange-500 mb-6 tracking-tighter">Event Title</h2>
+            <div class="section-divider mb-8"></div>
+            <div class="space-y-6 text-gray-300">
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-2">Rules & Instructions</h4>
+                    <p id="modalDesc" class="leading-relaxed">Instructions go here.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-2">Coordinators</h4>
+                    <p id="modalCoords" class="italic">Coordinator info here.</p>
+                </div>
+            </div>
+            <div class="mt-10">
+                <a id="modalRegBtn" href="#" target="_blank" class="btn-ember w-full inline-block py-4 rounded-xl text-center">REGISTER NOW</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // Modal Logic
+        function openModal(title, desc, coords, link) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('modalCoords').innerText = coords;
+            document.getElementById('modalRegBtn').href = link;
+            document.getElementById('eventModal').classList.add('modal-active');
+        }
+
+        function closeModal(e) {
+            document.getElementById('eventModal').classList.remove('modal-active');
+        }
+
+        // Particle Canvas Logic
+        const canvas = document.getElementById('ash-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 3 + 1;
+                this.speedY = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 2;
+                this.opacity = Math.random() * 0.8 + 0.2;
+                this.color = Math.random() > 0.5 ? '#ff4d00' : '#4a4a4a';
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                if (this.y < -20) {
+                    this.y = canvas.height + 20;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        for (let i = 0; i < 60; i++) particles.push(new Particle());
+        animate();
+    </script>
+</body>
+</html>
